@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IAgora - Navegação</title>
+  <link rel="stylesheet" href="navegacao2.css" />
+  <link rel="stylesheet" href="classes.css" />
+  <link rel="stylesheet" href="atividades.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* 🔔 Estilo da mensagem de login bem-sucedido */
+    .login-success {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #22c55e;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.4s ease;
+      z-index: 9999;
+    }
+
+    .login-success.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-box">IA</div>
+      <h1>IAgora</h1>
+    </div>
+
+    <div class="user-card">
+      <p class="small">Logado como</p>
+      <p id="userName" class="name"></p>
+      <p id="userEmail" class="small"></p>
+    </div>
+
+    <script>
+      const userName = localStorage.getItem('userName');
+      const userEmail = localStorage.getItem('userEmail');
+      document.getElementById('userName').textContent = userName || '';
+      document.getElementById('userEmail').textContent = userEmail || '';
+    </script>
+
+    <nav class="menu">
+      <button class="menu-item active" data-page="turmas">
+        <i data-lucide="zap"></i>
+        <span>Turmas</span>
+      </button>
+
+      <button class="menu-item" data-page="atividades">
+        <i data-lucide="book"></i>
+        <span>Atividades</span>
+      </button>
+    </nav>
+
+    <button id="logoutBtn" class="logout-btn">
+      <i data-lucide="log-out"></i>
+      <span>Sair</span>
+    </button>
+  </aside>
+
+  <main class="main-content">
+    
+    <section id="turmas" class="page active">
+      <div class="container">
+        <header class="header">
+          <h1>Gerenciar Turmas</h1>
+          <button id="novaTurmaBtn" class="btn btn-primary">＋ Nova Turma</button>
+        </header>
+
+        <section id="formSection" class="card form-section hidden">
+          <h2 id="formTitle">Criar Nova Turma</h2>
+          <form id="classForm">
+            <input type="text" id="nome" placeholder="Nome da turma" required>
+            <textarea id="descricao" placeholder="Descrição da turma" rows="3"></textarea>
+            <input type="text" id="horario" placeholder="Horário (ex: Seg-Qua 14:00 - 15:30)">
+            <input type="number" id="alunos" placeholder="Número de alunos">
+            <div class="actions">
+              <button type="submit" class="btn btn-primary" id="saveBtn">Criar Turma</button>
+              <button type="button" class="btn btn-secondary" id="cancelBtn">Cancelar</button>
+            </div>
+          </form>
+        </section>
+
+        <section id="classesList" class="grid">
+          <div class="card empty">
+            <p>Nenhuma turma criada ainda. Clique em <strong>"Nova Turma"</strong> para começar!</p>
+          </div>
+        </section>
+      </div>
+    </section>
+     
+    <section id="atividades" class="page hidden">
+
+  <main class="main">
+    <div class="header">
+      <h1>Gerenciar Atividades</h1>
+    </div> 
+
+    <div class="grid">
+      <div class="card">
+        <div class="activity-header">
+          <div>
+            <h3>Pensamento Lógico com Python</h3>
+            <p class="small-text">Turmas: DS2P39/DS1P39</p>
+          </div>
+        </div>
+
+        <div class="progress"><div class="progress-bar"></div></div>
+
+        <p class="small-text">Criar arvore binaria em Python</p>
+
+        <div class="actions">
+          <button class="btn">✏️ Editar</button>
+          <button class="btn btn-red">🗑️ Deletar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="activity-header">
+          <div>
+            <h3>Engenharia de Software</h3>
+            <p class="small-text">Turmas: DS2P39/DS1P39</p>
+          </div>
+
+         <div class="progress"><div class="progress-bar" style="width:90%"></div></div>
+
+        <p class="small-text">Metodologia Agil</p>
+
+        <div class="actions">
+          <button class="btn">✏️ Editar</button>
+          <button class="btn btn-red">🗑️ Deletar</button>
+        </div>
+      </div>
+    </div>
+
+    
+  </main>
+    </section>
+  </main>
+
+  <!-- ✅ Mensagem de sucesso -->
+  <div id="loginSuccess" class="login-success">✅ Login realizado com sucesso!</div>
+
+  <script>
+    lucide.createIcons();
+
+    // Exibe a mensagem de login apenas na primeira vez que entra
+    if (!sessionStorage.getItem('loginShown')) {
+      const msg = document.getElementById('loginSuccess');
+      msg.classList.add('show');
+      setTimeout(() => msg.classList.remove('show'), 3500);
+      sessionStorage.setItem('loginShown', 'true');
+    }
+
+    const menuItems = document.querySelectorAll('.menu-item');
+    const pages = document.querySelectorAll('.page');
+
+    menuItems.forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelector('.menu-item.active')?.classList.remove('active');
+        item.classList.add('active');
+
+        const pageToShow = item.dataset.page;
+        pages.forEach(page => {
+          if (page.id === pageToShow) {
+            page.classList.remove('hidden');
+            page.classList.add('active');
+          } else {
+            page.classList.add('hidden');
+            page.classList.remove('active');
+          }
+        });
+      });
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userEmail");
+      sessionStorage.removeItem("loginShown");
+      window.location.href = "home.html";
+    });
+
+    const formSection = document.getElementById('formSection');
+    const novaTurmaBtn = document.getElementById('novaTurmaBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const form = document.getElementById('classForm');
+    const list = document.getElementById('classesList');
+    const formTitle = document.getElementById('formTitle');
+    const saveBtn = document.getElementById('saveBtn');
+
+    let editingId = null;
+    let classes = JSON.parse(localStorage.getItem('classes') || '[]');
+
+    function renderClasses() {
+      list.innerHTML = '';
+      if (classes.length === 0) {
+        list.innerHTML = '<div class="card empty"><p>Nenhuma turma criada ainda. Clique em <strong>"Nova Turma"</strong> para começar!</p></div>';
+        return;
+      }
+
+      classes.forEach((turma) => {
+        const div = document.createElement('div');
+        div.className = 'card turma-card fade-in';
+        div.innerHTML = `
+          <h3>${turma.name}</h3>
+          <p class="desc">${turma.description || ''}</p>
+          <p><span class="label">📅 Horário:</span> ${turma.schedule || 'Não definido'}</p>
+          <p><span class="label">👥 Alunos:</span> ${turma.students}</p>
+          <div class="actions">
+            <button class="btn btn-primary btn-small" onclick="editClass(${turma.id})">✏ Editar</button>
+            <button class="btn btn-danger btn-small" onclick="deleteClass(${turma.id})">🗑 Deletar</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    novaTurmaBtn.addEventListener('click', () => {
+      form.reset();
+      editingId = null;
+      formTitle.textContent = 'Criar Nova Turma';
+      saveBtn.textContent = 'Criar Turma';
+      formSection.classList.toggle('hidden');
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      formSection.classList.add('hidden');
+      form.reset();
+      editingId = null;
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const turma = {
+        id: editingId || Date.now(),
+        name: document.getElementById('nome').value,
+        description: document.getElementById('descricao').value,
+        schedule: document.getElementById('horario').value,
+        students: parseInt(document.getElementById('alunos').value) || 0,
+      };
+
+      if (editingId) {
+        classes = classes.map(c => c.id === editingId ? turma : c);
+      } else {
+        classes.push(turma);
+      }
+
+      localStorage.setItem('classes', JSON.stringify(classes));
+      renderClasses();
+      form.reset();
+      editingId = null;
+      formSection.classList.add('hidden');
+    });
+
+    window.editClass = (id) => {
+      const turma = classes.find(c => c.id === id);
+      if (!turma) return;
+
+      document.getElementById('nome').value = turma.name;
+      document.getElementById('descricao').value = turma.description;
+      document.getElementById('horario').value = turma.schedule;
+      document.getElementById('alunos').value = turma.students;
+
+      editingId = turma.id;
+      formTitle.textContent = 'Editar Turma';
+      saveBtn.textContent = 'Atualizar Turma';
+      formSection.classList.remove('hidden');
+    };
+
+    window.deleteClass = (id) => {
+      if (!confirm('Deseja realmente deletar esta turma?')) return;
+      classes = classes.filter(c => c.id !== id);
+      localStorage.setItem('classes', JSON.stringify(classes));
+      renderClasses();
+    };
+
+    renderClasses();
+  </script>
+</body>
+</html>
