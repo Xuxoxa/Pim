@@ -1,0 +1,120 @@
+* {
+  margin: 0;               /* Remove as margens padrão de todos os elementos */
+  padding: 0;              /* Remove os espaçamentos internos padrão de todos os elementos */
+  box-sizing: border-box;  /* Faz com que a largura/altura incluam padding e bordas (melhor controle de layout) */
+  font-family: "Inter", sans-serif; /* Define a fonte padrão do site */
+}
+
+body {
+  background: linear-gradient(to bottom, #101826, #19263b); /* Cria um fundo com gradiente vertical escuro */
+  color: #fff;                /* Define a cor padrão do texto como branco */
+  min-height: 100vh;          /* Faz o corpo ocupar toda a altura da tela */
+  display: flex;              /* Usa flexbox para organizar os elementos principais (header + conteúdo) */
+  flex-direction: column;     /* Coloca os elementos um abaixo do outro (em coluna) */
+}
+
+.header {
+  width: 100%;                                    /* Faz o cabeçalho ocupar toda a largura da tela */
+  display: flex;                                  /* Usa flexbox para organizar os itens dentro do cabeçalho */
+  justify-content: space-between;                 /* Espaça os itens: logo à esquerda, algo à direita */
+  align-items: center;                            /* Centraliza verticalmente os elementos */
+  padding: 20px 40px;                             /* Adiciona espaçamento interno (20px vertical, 40px horizontal) */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Linha sutil na parte inferior do cabeçalho */
+}
+
+.logo {
+  display: flex;              /* Coloca os elementos da logo (ícone + texto) lado a lado */
+  align-items: center;        /* Centraliza verticalmente */
+  gap: 10px;                  /* Espaço entre o ícone e o texto */
+}
+
+.logo-icon {
+  width: 32px;                /* Largura do quadrado do ícone */
+  height: 32px;               /* Altura do quadrado do ícone */
+  background-color: #246bff;  /* Cor de fundo azul */
+  border-radius: 6px;         /* Arredonda os cantos do ícone */
+  display: flex;              /* Centraliza o conteúdo dentro do ícone */
+  align-items: center;        /* Centraliza verticalmente */
+  justify-content: center;    /* Centraliza horizontalmente */
+  font-weight: bold;          /* Deixa o texto dentro do ícone em negrito */
+}
+
+.logo h1 {
+  font-size: 20px;  /* Define o tamanho do texto do nome da logo */
+  color: #fff;      /* Cor branca para o texto */
+}
+
+.login-container {
+  flex: 1;                            /* Faz o container ocupar o restante do espaço disponível */
+  display: flex;                      /* Usa flexbox */
+  align-items: center;                /* Centraliza verticalmente */
+  justify-content: center;            /* Centraliza horizontalmente */
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.05); /* Fundo semitransparente (efeito de vidro escuro) */
+  padding: 40px;                         /* Espaçamento interno */
+  border-radius: 12px;                   /* Cantos arredondados */
+  width: 320px;                          /* Largura fixa da caixa de login */
+  text-align: center;                    /* Centraliza o conteúdo do texto */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra para destacar a caixa */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil transparente */
+}
+
+.login-box h2 {
+  margin-bottom: 20px; /* Espaço abaixo do título "Login" */
+  color: #fff;         /* Texto branco */
+}
+
+.login-box input {
+  width: 100%;                             /* Campo ocupa toda a largura da caixa */
+  padding: 12px;                           /* Espaçamento interno */
+  margin-bottom: 15px;                     /* Espaço entre os campos */
+  border: none;                            /* Remove a borda padrão */
+  border-radius: 6px;                      /* Cantos arredondados */
+  background: rgba(255, 255, 255, 0.1);    /* Fundo transparente */
+  color: #fff;                             /* Texto branco */
+  font-size: 14px;                         /* Tamanho do texto */
+}
+
+.login-box input::placeholder {
+  color: #aaa; /* Cor cinza clara para o texto de placeholder */
+}
+
+.create-account {
+  display: block;            /* Faz o link ocupar toda a linha (permite margin-top funcionar bem) */
+  margin-top: 15px;          /* Espaço acima do link "Criar conta" */
+  color: #ccc;               /* Cor cinza clara */
+  text-decoration: none;     /* Remove o sublinhado */
+  font-size: 14px;           /* Tamanho da fonte */
+}
+
+.create-account:hover {
+  color: #fff; /* Muda a cor para branco ao passar o mouse */
+}
+
+button {
+  background-color: #3b82f6;     /* Fundo azul */
+  color: white;                  /* Texto branco */
+  border: none;                  /* Remove borda padrão */
+  border-radius: 8px;            /* Cantos arredondados */
+  padding: 8px 16px;             /* Espaçamento interno (vertical e horizontal) */
+  font-weight: 500;              /* Peso da fonte médio */
+  cursor: pointer;               /* Muda o cursor para “mãozinha” ao passar por cima */
+  transition: background-color 0.2s ease; /* Animação suave na mudança de cor */
+}
+.professor-btn {
+  margin-top: 15px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.professor-btn:hover {
+  background-color: #1d4ed8;
+}
