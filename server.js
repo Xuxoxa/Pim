@@ -1,4 +1,4 @@
-// server.js
+
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -15,13 +15,18 @@ const JWT_EXPIRY = process.env.JWT_EXPIRY || '7d';
 app.use(helmet());
 app.use(express.json());
 
-// CORS: ajuste o origin conforme onde seu front roda
+
 app.use(cors({
-  origin: ['http://127.0.0.1:5501', 'http://localhost:5500', 'http://localhost:3000'],
+  origin: [
+    'http://127.0.0.1:5501',
+    'http://localhost:5500',
+    'http://localhost:3000',
+    'https://xuxoxa.github.io/Pim/',    
+  ],
   credentials: true
 }));
 
-// --- Helpers ---
+
 function generateToken(payload) {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRY });
 }
@@ -38,15 +43,11 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// --- Rotas ---
-// Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-/**
- * POST /api/register
- */
+
 app.post('/api/register', (req, res) => {
   const { name, email, password } = req.body;
   console.log('🟢 [REGISTER] Dados recebidos:', { name, email });
@@ -86,9 +87,7 @@ app.post('/api/register', (req, res) => {
   });
 });
 
-/**
- * POST /api/login
- */
+
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
   console.log('🟠 [LOGIN] Tentando login:', email);
@@ -130,9 +129,7 @@ app.post('/api/login', (req, res) => {
   );
 });
 
-/**
- * GET /api/me
- */
+
 app.get('/api/me', authenticateToken, (req, res) => {
   const userId = req.user.id;
   db.get('SELECT id, name, email, created_at FROM users WHERE id = ?', [userId], (err, user) => {
@@ -142,9 +139,7 @@ app.get('/api/me', authenticateToken, (req, res) => {
   });
 });
 
-/**
- * POST /api/logout
- */
+
 app.post('/api/logout', (req, res) => {
   res.json({ status: 'ok' });
 });
